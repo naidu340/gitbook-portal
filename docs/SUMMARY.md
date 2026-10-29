@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Introduction](README.md)
+* [Introduction](Introduction.md)
 * [Getting Started](getting-started.md)
 * [Authentication Guide](authentication-guide.md)
 
