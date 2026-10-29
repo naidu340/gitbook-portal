@@ -1,0 +1,56 @@
+name: Publish OpenAPI to GitBook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'openapi/pos-swagger.json'
+      - '.github/workflows/publish-openapi.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-openapi:
+    name: Publish API specification
+    runs-on: ubuntu-latest
+
+    env:
+      GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
+      GITBOOK_SPEC_NAME: ${{ vars.GITBOOK_SPEC_NAME }}
+      GITBOOK_ORGANIZATION_ID: ${{ vars.GITBOOK_ORGANIZATION_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate OpenAPI JSON
+        run: |
+          jq empty openapi/pos-swagger.json
+
+          if ! jq -e '.openapi or .swagger' \
+            openapi/pos-swagger.json > /dev/null; then
+            echo "The JSON does not contain an OpenAPI or Swagger version."
+            exit 1
+          fi
+
+      - name: Publish OpenAPI specification to GitBook
+        run: |
+          if [ -z "$GITBOOK_TOKEN" ]; then
+            echo "GITBOOK_TOKEN is not configured."
+            exit 1
+          fi
+
+          if [ -z "$GITBOOK_SPEC_NAME" ] || \
+             [ -z "$GITBOOK_ORGANIZATION_ID" ]; then
+            echo "GitBook specification name or organization ID is missing."
+            exit 1
+          fi
+
+          npx -y @gitbook/cli@latest openapi publish \
+            --spec "$GITBOOK_SPEC_NAME" \
+            --organization "$GITBOOK_ORGANIZATION_ID" \
+            openapi/pos-swagger.json
