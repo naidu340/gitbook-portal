@@ -1,0 +1,710 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "API – All Versions",
+		"description": "Displays only v1 endpoints by default, and v2 for breaking changes",
+		"version": "AllVersions"
+	},
+	"servers": [
+		{
+			"url": "https://api-dev.example.com/public-api",
+			"description": "Development"
+		},
+		{
+			"url": "https://api-uat.example.com/public-api",
+			"description": "UAT"
+		},
+		{
+			"url": "https://api.example.com/public-api",
+			"description": "Production"
+		}
+	],
+	"paths": {
+		"/v1/POS/ChargeCashTicket": {
+			"post": {
+				"tags": [
+					"POS"
+				],
+				"summary": "This procedure is to charge the Tickets",
+				"description": "Note:This is the Post Request of Charge CashTicket.\r\n\r\n\r\nTotal amount should be equal to total number of all payment amounts.\r\n\r\n\r\nTicket ID may only be used once. \r\n \r\n    {\r\n           \"siteCode\": 123456,      \r\n           \"posName\": \"string\",\r\n           \"ticketId\": \"230531001\",\r\n           \"posLocation\": \"Restaurant\",\r\n           \"reservationDetailId\": \"string\",\r\n           \"ticketURL\":\"https://ticket.winston.com/hfaohqowhfoqhfoqhfoh\",\r\n           \"products\": [ \r\n           {\r\n               \"name\": \"Espresso\",\r\n               \"amountInclVAT\": 300,\r\n               \"vatPercentage\": 9,\r\n               \"quantity\": 1,\r\n               \"revenueGroupDescription\": \"Coffee\",\r\n               \"revenueGroup\": \"string\",\r\n               \"revenueGroupId\":\"121\",\r\n               \"orderedAt\": \"2023-05-17T09:08:39.702Z\"\r\n            }],           \r\n           \"payments\": [\r\n               {\r\n                   \"paymentAmount\": 1050,\r\n                   \"name\": \"Cash\",\r\n                   \"paymentType\": \"Cash\",\r\n                   \"paymentReference\": \"test3\",\r\n                   \"paymentMadeAt\": \"2023-05-30T15:12:18\r\n                     .3730051+05:30\"\r\n               }],\r\n              \"total\": 2350,\r\n              \"createdAt\": \"2023-05-18T09:08:39.702Z\",\r\n              \"allowDuplicateTickets\":true,\r\n    }\r\n    \r\nExample response:\r\n   \r\n      {\r\n       \r\n                   \"result\": {\r\n                       \"bookingId\": 16484791\r\n                   },\r\n                   \"siteCode\": 181914,\r\n                   \"success\": true,\r\n                   \"status\": \"Processed\",\r\n                   \"errors\": [],\r\n                   \"warnings\": [],\r\n                  \"identifier\": \"14ebf2e2-e4af-4fdc-98da-58fa03332751\"\r\n               \r\n      }",
+				"requestBody": {
+					"description": "",
+					"content": {
+						"application/json-patch+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"text/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/*+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ObjectServiceResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/POS/ChargeRoom": {
+			"post": {
+				"tags": [
+					"POS"
+				],
+				"summary": "This procedure is to charge the Rooms",
+				"description": "Note:This is the Post Request of ChargeRoom\r\n\r\n\r\nTicket ID may only be used once. \r\n \r\n    {\r\n         \"siteCode\": 123456,\r\n         \"posName\": \"Pixelpoint\",\r\n         \"posLocation\": \"Restaurant\",\r\n         \"reservationDetailId\": \"1039805\",\r\n         \"ticketId\": \"230531001\",\r\n         \"ticketURL\":\"https://ticket.winston.com/hfaohqowhfoqhfoqhfoh\",\r\n         \"products\": [ \r\n          {\r\n             \"name\": \"Espresso\",\r\n             \"amountInclVAT\": 300,\r\n             \"vatPercentage\": 9,\r\n             \"quantity\": 1,\r\n             \"revenueGroupDescription\": \"Coffee\",\r\n             \"revenueGroup\" : \"string\",\r\n             \"revenueGroupId\":\"121\",\r\n             \"orderedAt\": \"2023-05-17T09:08:39.702Z\"\r\n          }],      \r\n          \"payments\": [\r\n            {\r\n              \"paymentAmount\": 0,\r\n              \"name\": \"string\",\r\n              \"paymentType\": \"string\",\r\n              \"paymentMadeAt\": \"string\",\r\n              \"paymentReference\": \"string\"\r\n            }\r\n          ],\r\n           \"total\": 300,\r\n           \"createdAt\": \"2023-05-18T09:08:39.702Z\",\r\n           \"allowDuplicateTickets\": true,\r\n    }\r\n    \r\nExample response :\r\n   \r\n    {\r\n       \r\n                   \"result\": {\r\n                       \"bookingId\": 16484791\r\n                   },\r\n                   \"siteCode\": 181914,\r\n                   \"success\": true,\r\n                   \"status\": \"Processed\",\r\n                   \"errors\": [],\r\n                   \"warnings\": [],\r\n                  \"identifier\": \"14ebf2e2-e4af-4fdc-98da-58fa03332751\"\r\n               \r\n      }",
+				"requestBody": {
+					"description": "",
+					"content": {
+						"application/json-patch+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"text/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/*+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ObjectServiceResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/POS/Guests/List": {
+			"get": {
+				"tags": [
+					"POS"
+				],
+				"summary": "This call is to get the guest information by given criteria",
+				"description": "Example response :\r\n   \r\n       {\r\n            \"result\":[\r\n               {\r\n                     \"reservationDetailId\": 12345,\r\n                     \"reservationNumber\": 67890,\r\n                     \"guestName\": \"John Doe\",\r\n                     \"guestId\": \"G123\",\r\n                     \"roomNumber\": 101,\r\n                     \"roomName\": \"Deluxe Suite\",\r\n                     \"roomType\": \"Suite\",\r\n                     \"groupName\" : \"group res\"\r\n                     \"isBookingAllowed\": true,\r\n                     \"fnbRemark\": \"Vegetarian meals only\",\r\n                     \"ratePlan\": \"Standard Rate\",\r\n                     \"productData\": [\r\n                       {\r\n                         \"productName\": \"Water Bottle\",\r\n                         \"productQuantity\": 2,\r\n                         \"productPrice\": 5,\r\n                         \"productAmount\": 10\r\n                       },\r\n                       {\r\n                         \"productName\": \"Snack Box\",\r\n                         \"productQuantity\": 1,\r\n                         \"productPrice\": 15,\r\n                         \"productAmount\": 15\r\n                       }\r\n                     ],\r\n                     \"firstName\": \"John\",\r\n                     \"lastName\": \"Doe\",\r\n                     \"title\": \"Mr.\",\r\n                     \"countryName\": \"United States\",\r\n                     \"arrivalDate\": \"2025-07-28\",\r\n                     \"arrivalTime\": \"15:35\",\r\n                     \"departureDate\": \"2025-07-29\",\r\n                     \"departureTime\": \"07:30\",\r\n                     \"adults\": 2,\r\n                     \"children\": 0,\r\n                     \"baby\": 0\r\n                   }\r\n                  ],\r\n                  \"siteCode\": 950928,\r\n                  \"success\": true,\r\n                  \"status\": \"Processed\",\r\n                  \"errors\": [],\r\n                  \"warnings\": [],\r\n                  \"identifier\": \"df78125f-1c29-4173-944b-f3b3bd76cb17\" \r\n        }",
+				"parameters": [
+					{
+						"name": "siteCode",
+						"in": "query",
+						"description": "Example:123456",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					{
+						"name": "key",
+						"in": "query",
+						"description": "The unique Search Key identifier {Room,Reservation,Name,Guestid,Session,Void, Any}\r\n            \r\n\r\n<remarks>\r\n            Note:search key abbrivations Room => RoomNumber,Reservation => ReservationNumber or ReservationNumber-subNumber ,Session => Reservationdetailid, Any=> Room Number, Reservation Number and Guest Name, Group/ Reservation Name.\r\n            </remarks>",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "value",
+						"in": "query",
+						"description": "The unique Search Value identifier {123,12345,\"JOE\",12345,133 or 133-1,67899}",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GuestInfoListServiceResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/POS/RefundCashTicket": {
+			"post": {
+				"tags": [
+					"POS"
+				],
+				"summary": "This procedure is to call Refund Cash Ticket",
+				"description": "Note:This is the Post Request of Refund Cash Ticket.\r\n\r\n\r\n Total amount should be equal to total number of all payment amounts\r\n\r\n\r\nTicket ID may only be used once. \r\n \r\n    {\r\n           \"siteCode\": 123456,      \r\n           \"posName\": \"string\",\r\n           \"ticketId\": \"230531001\",\r\n           \"posLocation\": \"Restaurant\",\r\n           \"reservationDetailId\": \"string\",\r\n           \"ticketURL\":\"https://ticket.winston.com/hfaohqowhfoqhfoqhfoh\",\r\n           \"products\": [ \r\n           {\r\n               \"name\": \"Espresso\",\r\n               \"amountInclVAT\": 300,\r\n               \"vatPercentage\": 9,\r\n               \"quantity\": 1,\r\n               \"revenueGroupDescription\": \"Coffee\",\r\n               \"revenueGroup\": \"string\",\r\n               \"revenueGroupId\":\"121\",\r\n               \"orderedAt\": \"2023-05-17T09:08:39.702Z\"\r\n            }],           \r\n           \"payments\": [\r\n               {\r\n                   \"paymentAmount\": 1050,\r\n                   \"name\": \"Cash\",\r\n                   \"paymentType\": \"Cash\",\r\n                   \"paymentReference\": \"test3\",\r\n                   \"paymentMadeAt\": \"2023-05-30T15:12:18\r\n                     .3730051+05:30\"\r\n               }],\r\n              \"total\": 2350,\r\n              \"createdAt\": \"2023-05-18T09:08:39.702Z\",\r\n              \"allowDuplicateTickets\":true,\r\n    }\r\n    \r\nExample response:\r\n   \r\n        {\r\n       \r\n                   \"result\": {\r\n                       \"bookingId\": 16484791\r\n                   },\r\n                   \"siteCode\": 181914,\r\n                   \"success\": true,\r\n                   \"status\": \"Processed\",\r\n                   \"errors\": [],\r\n                   \"warnings\": [],\r\n                  \"identifier\": \"14ebf2e2-e4af-4fdc-98da-58fa03332751\"\r\n               \r\n        }",
+				"requestBody": {
+					"description": "",
+					"content": {
+						"application/json-patch+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"text/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/*+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ObjectServiceResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/POS/RefundRoom": {
+			"post": {
+				"tags": [
+					"POS"
+				],
+				"summary": "This procedure is to call Refund Process",
+				"description": "Note:This is the Post Request of Refund \r\n\r\n\r\nTicket ID may only be used once. \r\n \r\n    {\r\n       \"siteCode\": 123456,       \r\n       \"posName\": \"string\",\r\n       \"reservationDetailId\": \"1039805\",\r\n       \"ticketId\": \"230531001\",\r\n       \"posLocation\": \"Restaurant\",\r\n       \"ticketURL\":\"https://ticket.winston.com/hfaohqowhfoqhfoqhfoh\",\r\n       \"products\": [ \r\n       {\r\n           \"name\": \"Espresso\",\r\n           \"amountInclVAT\": -300,\r\n           \"vatPercentage\": 9,\r\n           \"quantity\": 1,\r\n           \"revenueGroupDescription\": \"Coffee\",\r\n           \"revenueGroupId\":\"121\",\r\n           \"orderedAt\": \"2023-05-17T09:08:39.702Z\"\r\n        }], \r\n        \"payments\": [\r\n            {\r\n                \"paymentAmount\": 0,\r\n                \"name\": \"string\",\r\n                \"paymentType\": \"string\",\r\n                \"paymentMadeAt\": \"string\"\r\n                \"paymentReference\": \"string\"\r\n            }\r\n        ],\r\n         \"total\": 2350,\r\n         \"createdAt\": \"2023-05-18T09:08:39.702Z\",\r\n         \"allowDuplicateTickets\": true,\r\n    }\r\n    \r\nExample response :\r\n  \r\n      {\r\n                  \"result\": {\r\n                       \"bookingId\": 16484791\r\n                   },\r\n                   \"siteCode\": 181914,\r\n                   \"success\": true,\r\n                   \"status\": \"Processed\",\r\n                   \"errors\": [],\r\n                   \"warnings\": [],\r\n                  \"identifier\": \"14ebf2e2-e4af-4fdc-98da-58fa03332751\"\r\n               \r\n       }",
+				"requestBody": {
+					"description": "",
+					"content": {
+						"application/json-patch+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"text/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						},
+						"application/*+json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomPOSChargeData"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ObjectServiceResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ServiceResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"CustomPOSChargeData": {
+				"type": "object",
+				"properties": {
+					"siteCode": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"posName": {
+						"type": "string",
+						"nullable": true
+					},
+					"posLocation": {
+						"type": "string",
+						"nullable": true
+					},
+					"reservationDetailId": {
+						"type": "string",
+						"nullable": true
+					},
+					"ticketId": {
+						"type": "string",
+						"nullable": true
+					},
+					"products": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Product"
+						},
+						"nullable": true
+					},
+					"payments": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Payment"
+						},
+						"nullable": true
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"nullable": true
+					},
+					"allowDuplicateTickets": {
+						"type": "boolean"
+					},
+					"ticketURL": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"Product": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"amountInclVAT": {
+						"type": "number",
+						"format": "double"
+					},
+					"vatPercentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"revenueGroupId": {
+						"type": "string",
+						"nullable": true
+					},
+					"revenueGroup": {
+						"type": "string",
+						"nullable": true
+					},
+					"revenueGroupDescription": {
+						"type": "string",
+						"nullable": true
+					},
+					"orderedAt": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"Payment": {
+				"type": "object",
+				"properties": {
+					"paymentAmount": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"paymentType": {
+						"type": "string",
+						"nullable": true
+					},
+					"paymentMadeAt": {
+						"type": "string",
+						"nullable": true
+					},
+					"paymentReference": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"ObjectServiceResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"readOnly": true
+					},
+					"status": {
+						"type": "string",
+						"nullable": true
+					},
+					"errors": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseError"
+						},
+						"nullable": true
+					},
+					"warnings": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseWarning"
+						},
+						"nullable": true
+					},
+					"result": {
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"ServiceResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"readOnly": true
+					},
+					"status": {
+						"type": "string",
+						"nullable": true
+					},
+					"errors": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseError"
+						},
+						"nullable": true
+					},
+					"warnings": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseWarning"
+						},
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"ServiceResponseError": {
+				"type": "object",
+				"properties": {
+					"errorCode": {
+						"type": "string",
+						"nullable": true
+					},
+					"errorMessage": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"ServiceResponseWarning": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string",
+						"nullable": true
+					},
+					"message": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"GuestInfoListServiceResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"readOnly": true
+					},
+					"status": {
+						"type": "string",
+						"nullable": true
+					},
+					"errors": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseError"
+						},
+						"nullable": true
+					},
+					"warnings": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ServiceResponseWarning"
+						},
+						"nullable": true
+					},
+					"result": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/GuestInfo"
+						},
+						"nullable": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"GuestInfo": {
+				"type": "object",
+				"properties": {
+					"reservationDetailId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"reservationNumber": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"guestName": {
+						"type": "string",
+						"nullable": true
+					},
+					"guestId": {
+						"type": "string",
+						"nullable": true
+					},
+					"roomNumber": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"roomName": {
+						"type": "string",
+						"nullable": true
+					},
+					"roomType": {
+						"type": "string",
+						"nullable": true
+					},
+					"isBookingAllowed": {
+						"type": "boolean"
+					},
+					"fnbRemark": {
+						"type": "string",
+						"nullable": true
+					},
+					"ratePlan": {
+						"type": "string",
+						"nullable": true
+					},
+					"firstName": {
+						"type": "string",
+						"nullable": true
+					},
+					"lastName": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string",
+						"nullable": true
+					},
+					"countryName": {
+						"type": "string",
+						"nullable": true
+					},
+					"groupName": {
+						"type": "string",
+						"nullable": true
+					},
+					"arrivalDate": {
+						"type": "string",
+						"nullable": true
+					},
+					"arrivalTime": {
+						"type": "string",
+						"nullable": true
+					},
+					"departureDate": {
+						"type": "string",
+						"nullable": true
+					},
+					"departureTime": {
+						"type": "string",
+						"nullable": true
+					},
+					"adults": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"children": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"baby": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"Bearer": {
+				"type": "apiKey",
+				"description": "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	"security": [
+		{
+			"Bearer": []
+		}
+	]
+}
