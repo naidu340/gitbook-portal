@@ -1,5 +1,5 @@
 ---
-description: Welcome to the FTH POS API Developer Portal.
+description: Welcome to the Public API Developer Portal
 ---
 
 # Introduction
